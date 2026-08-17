@@ -6,8 +6,10 @@
 
   <title>MedStart</title>
 
-  <meta name="description"
-        content="MedStart - منصة تعليمية لطلاب سنة إعداد الطب">
+  <meta
+    name="description"
+    content="MedStart - منصة تعليمية لطلاب سنة إعداد الطب"
+  >
 
   <style>
     * {
@@ -22,17 +24,17 @@
     }
 
     header {
-      background: #ffffff;
+      background: #fff;
       border-bottom: 1px solid #e5e7eb;
-      padding: 16px 20px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .header-inner {
       max-width: 1200px;
       margin: auto;
+      padding: 15px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -40,28 +42,35 @@
     }
 
     .logo {
-      font-size: 24px;
+      font-size: 25px;
       font-weight: 800;
       color: #2563eb;
     }
 
-    .auth-buttons {
+    .auth-area {
       display: flex;
+      align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     button {
       border: 0;
       border-radius: 10px;
-      padding: 10px 16px;
+      padding: 11px 17px;
       cursor: pointer;
       font-size: 14px;
       font-weight: 700;
     }
 
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
     .primary {
       background: #2563eb;
-      color: white;
+      color: #fff;
     }
 
     .secondary {
@@ -69,72 +78,111 @@
       color: #2563eb;
     }
 
+    .danger {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .user-box {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      color: #475569;
+      font-size: 14px;
+    }
+
     main {
       max-width: 1200px;
       margin: auto;
-      padding: 40px 20px;
+      padding: 35px 20px;
     }
 
     .hero {
-      background: white;
-      border-radius: 20px;
-      padding: 40px 25px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border-radius: 22px;
+      padding: 45px 25px;
       text-align: center;
-      box-shadow: 0 5px 25px rgba(0,0,0,.05);
+      box-shadow: 0 8px 30px rgba(37, 99, 235, .15);
     }
 
     .hero h1 {
-      margin-top: 0;
+      margin: 0 0 15px;
       font-size: 38px;
     }
 
     .hero p {
-      color: #64748b;
-      line-height: 1.8;
+      margin: 0;
+      line-height: 1.9;
+      opacity: .95;
     }
 
     .section {
       margin-top: 35px;
     }
 
-    .section h2 {
-      margin-bottom: 20px;
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-title h2 {
+      margin: 0;
     }
 
     #subjects {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 18px;
     }
 
     .subject-card {
-      background: white;
-      border-radius: 16px;
-      padding: 25px;
+      background: #fff;
       border: 1px solid #e5e7eb;
+      border-radius: 17px;
+      padding: 22px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.04);
     }
 
     .subject-card h3 {
-      margin-top: 0;
+      margin: 0 0 10px;
+    }
+
+    .subject-card p {
+      color: #64748b;
+      line-height: 1.7;
     }
 
     .empty {
-      background: white;
-      padding: 25px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
       border-radius: 15px;
-      color: #64748b;
+      padding: 25px;
       text-align: center;
+      color: #64748b;
+      grid-column: 1 / -1;
     }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      color: #64748b;
+    }
+
+    /* Modal */
 
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.45);
+      background: rgba(15, 23, 42, .55);
+      z-index: 100;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      z-index: 100;
     }
 
     .modal.active {
@@ -143,10 +191,11 @@
 
     .modal-box {
       width: 100%;
-      max-width: 420px;
-      background: white;
-      border-radius: 18px;
+      max-width: 430px;
+      background: #fff;
+      border-radius: 20px;
       padding: 25px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.2);
     }
 
     .modal-box h2 {
@@ -155,39 +204,72 @@
 
     .modal-box input {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin: 7px 0;
       border: 1px solid #d1d5db;
-      border-radius: 9px;
+      border-radius: 10px;
+      outline: none;
       font-size: 15px;
+    }
+
+    .modal-box input:focus {
+      border-color: #2563eb;
     }
 
     .modal-actions {
       display: flex;
-      gap: 10px;
+      gap: 9px;
       margin-top: 12px;
+    }
+
+    .modal-actions button {
+      flex: 1;
     }
 
     .message {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 8px;
       display: none;
+      margin-top: 12px;
+      padding: 11px;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.6;
     }
 
-    footer {
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .loading {
       text-align: center;
-      padding: 30px 20px;
+      padding: 25px;
       color: #64748b;
     }
 
     @media (max-width: 600px) {
-      .hero h1 {
-        font-size: 28px;
-      }
-
       .header-inner {
         flex-direction: column;
+      }
+
+      .hero h1 {
+        font-size: 29px;
+      }
+
+      .hero {
+        padding: 35px 20px;
+      }
+
+      .user-box {
+        justify-content: center;
       }
     }
   </style>
@@ -199,57 +281,91 @@
   <div class="header-inner">
 
     <div class="logo">
-      MedStart
+      MedStart 🩺
     </div>
 
-    <div class="auth-buttons">
-      <button class="secondary" id="loginBtn">
-        تسجيل الدخول
-      </button>
+    <div class="auth-area">
 
-      <button class="primary" id="registerBtn">
-        إنشاء حساب
-      </button>
+      <div id="guestButtons">
+        <button
+          class="secondary"
+          id="loginBtn">
+          تسجيل الدخول
+        </button>
+
+        <button
+          class="primary"
+          id="registerBtn">
+          إنشاء حساب
+        </button>
+      </div>
+
+      <div
+        class="user-box"
+        id="userBox">
+
+        <span id="userEmail"></span>
+
+        <button
+          class="danger"
+          id="logoutBtn">
+          تسجيل الخروج
+        </button>
+
+      </div>
+
     </div>
 
   </div>
 </header>
 
+
 <main>
 
   <section class="hero">
-    <h1>مرحبًا بك في MedStart 🩺</h1>
+
+    <h1>
+      مرحبًا بك في MedStart 🩺
+    </h1>
 
     <p>
       منصتك التعليمية لطلاب سنة إعداد الطب.
       <br>
       المواد والوحدات والدروس في مكان واحد.
     </p>
+
   </section>
+
 
   <section class="section">
 
-    <h2>المواد الدراسية</h2>
+    <div class="section-title">
+      <h2>المواد الدراسية</h2>
+    </div>
 
     <div id="subjects">
+
       <div class="empty">
-        لا توجد مواد مضافة حاليًا.
+        جاري تحميل المواد...
       </div>
+
     </div>
 
   </section>
 
 </main>
 
+
 <footer>
   © 2026 MedStart
 </footer>
 
-<!-- =========================
-     AUTH MODAL
-========================= -->
 
-<div class="modal" id="authModal">
+<!-- AUTH MODAL -->
+
+<div
+  class="modal"
+  id="authModal">
 
   <div class="modal-box">
 
@@ -261,27 +377,27 @@
       type="email"
       id="email"
       placeholder="البريد الإلكتروني"
+      autocomplete="email"
     >
 
     <input
       type="password"
       id="password"
       placeholder="كلمة المرور"
+      autocomplete="current-password"
     >
 
     <div class="modal-actions">
 
       <button
         class="primary"
-        id="authSubmit"
-      >
+        id="authSubmit">
         تسجيل الدخول
       </button>
 
       <button
         class="secondary"
-        id="closeModal"
-      >
+        id="closeModal">
         إغلاق
       </button>
 
@@ -289,39 +405,54 @@
 
     <div
       class="message"
-      id="authMessage"
-    ></div>
+      id="authMessage">
+    </div>
 
   </div>
 
 </div>
 
-<!-- =========================
-     FIREBASE
-========================= -->
 
 <script type="module">
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  /* ==========================================
+     FIREBASE IMPORTS
+  ========================================== */
+
+  import {
+    initializeApp
+  } from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 
   import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    onAuthStateChanged,
+    signOut
+  } from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
 
   import {
     getFirestore,
     collection,
-    getDocs
-  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+    getDocs,
+    doc,
+    setDoc
+  } from
+  "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
+
+  /* ==========================================
+     FIREBASE CONFIG
+  ========================================== */
 
   const firebaseConfig = {
 
-    apiKey: "AIzaSyAgpyK22xVCCyfrcdkwYwv8Y7brmpEsBDs",
+    apiKey:
+      "AIzaSyAgpyK22xVCCyfrcdkwYwv8Y7brmpEsBDs",
 
     authDomain:
       "medstart-ee44d.firebaseapp.com",
@@ -340,21 +471,45 @@
 
     measurementId:
       "G-XWXB59DX4Y"
+
   };
 
 
-  const app = initializeApp(firebaseConfig);
+  /* ==========================================
+     INITIALIZE FIREBASE
+  ========================================== */
 
-  const auth = getAuth(app);
+  const app =
+    initializeApp(firebaseConfig);
 
-  const db = getFirestore(app);
+  const auth =
+    getAuth(app);
 
+  const db =
+    getFirestore(app);
+
+
+  /* ==========================================
+     ELEMENTS
+  ========================================== */
 
   const loginBtn =
     document.getElementById("loginBtn");
 
   const registerBtn =
     document.getElementById("registerBtn");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+  const guestButtons =
+    document.getElementById("guestButtons");
+
+  const userBox =
+    document.getElementById("userBox");
+
+  const userEmail =
+    document.getElementById("userEmail");
 
   const authModal =
     document.getElementById("authModal");
@@ -368,35 +523,62 @@
   const authSubmit =
     document.getElementById("authSubmit");
 
+  const authMessage =
+    document.getElementById("authMessage");
+
   const email =
     document.getElementById("email");
 
   const password =
     document.getElementById("password");
 
-  const authMessage =
-    document.getElementById("authMessage");
 
-  let mode = "login";
+  let authMode = "login";
 
 
-  function showMessage(message) {
+  /* ==========================================
+     MESSAGE
+  ========================================== */
 
-    authMessage.textContent = message;
+  function showMessage(
+    text,
+    type = "error"
+  ) {
 
-    authMessage.style.display = "block";
+    authMessage.textContent = text;
+
+    authMessage.className =
+      "message show " + type;
+
   }
 
 
-  function openAuth(type) {
+  function clearMessage() {
 
-    mode = type;
+    authMessage.textContent = "";
+
+    authMessage.className =
+      "message";
+
+  }
+
+
+  /* ==========================================
+     OPEN AUTH
+  ========================================== */
+
+  function openAuth(mode) {
+
+    authMode = mode;
+
+    clearMessage();
+
+    email.value = "";
+    password.value = "";
 
     authModal.classList.add("active");
 
-    authMessage.style.display = "none";
-
-    if (type === "login") {
+    if (mode === "login") {
 
       authTitle.textContent =
         "تسجيل الدخول";
@@ -411,7 +593,9 @@
 
       authSubmit.textContent =
         "إنشاء حساب";
+
     }
+
   }
 
 
@@ -430,10 +614,30 @@
   closeModal.addEventListener(
     "click",
     () => {
+
       authModal.classList.remove("active");
+
     }
   );
 
+
+  authModal.addEventListener(
+    "click",
+    event => {
+
+      if (event.target === authModal) {
+
+        authModal.classList.remove("active");
+
+      }
+
+    }
+  );
+
+
+  /* ==========================================
+     AUTH
+  ========================================== */
 
   authSubmit.addEventListener(
     "click",
@@ -445,18 +649,46 @@
       const userPassword =
         password.value;
 
-      if (!userEmail || !userPassword) {
+
+      if (!userEmail) {
 
         showMessage(
-          "اكتب البريد الإلكتروني وكلمة المرور."
+          "اكتب البريد الإلكتروني."
         );
 
         return;
+
       }
+
+
+      if (!userPassword) {
+
+        showMessage(
+          "اكتب كلمة المرور."
+        );
+
+        return;
+
+      }
+
+
+      if (userPassword.length < 6) {
+
+        showMessage(
+          "كلمة المرور يجب أن تكون 6 أحرف على الأقل."
+        );
+
+        return;
+
+      }
+
+
+      authSubmit.disabled = true;
+
 
       try {
 
-        if (mode === "login") {
+        if (authMode === "login") {
 
           await signInWithEmailAndPassword(
             auth,
@@ -464,87 +696,181 @@
             userPassword
           );
 
+
           showMessage(
-            "تم تسجيل الدخول بنجاح."
+            "تم تسجيل الدخول بنجاح.",
+            "success"
           );
+
+
+          setTimeout(() => {
+
+            authModal.classList.remove(
+              "active"
+            );
+
+          }, 700);
+
 
         } else {
 
-          await createUserWithEmailAndPassword(
-            auth,
-            userEmail,
-            userPassword
+
+          const credential =
+            await createUserWithEmailAndPassword(
+              auth,
+              userEmail,
+              userPassword
+            );
+
+
+          const user =
+            credential.user;
+
+
+          /* إنشاء ملف الطالب في Firestore */
+
+          await setDoc(
+            doc(
+              db,
+              "users",
+              user.uid
+            ),
+            {
+
+              fullName:
+                userEmail,
+
+              email:
+                userEmail,
+
+              role:
+                "student",
+
+              walletBalance:
+                0,
+
+              createdAt:
+                Date.now()
+
+            }
           );
 
+
           showMessage(
-            "تم إنشاء الحساب بنجاح."
+            "تم إنشاء الحساب بنجاح.",
+            "success"
           );
+
+
+          setTimeout(() => {
+
+            authModal.classList.remove(
+              "active"
+            );
+
+          }, 700);
+
         }
 
       } catch (error) {
 
-        console.error(error);
-
-        showMessage(
-          "تعذر تنفيذ العملية. تأكد من البيانات وحاول مرة أخرى."
+        console.error(
+          "Firebase Auth Error:",
+          error
         );
+
+
+        let message =
+          "حدث خطأ. حاول مرة أخرى.";
+
+
+        if (
+          error.code ===
+          "auth/email-already-in-use"
+        ) {
+
+          message =
+            "هذا البريد الإلكتروني مستخدم بالفعل.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/invalid-email"
+        ) {
+
+          message =
+            "البريد الإلكتروني غير صحيح.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/weak-password"
+        ) {
+
+          message =
+            "كلمة المرور ضعيفة.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/invalid-credential"
+        ) {
+
+          message =
+            "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+        }
+
+        else if (
+          error.code ===
+          "auth/user-not-found"
+        ) {
+
+          message =
+            "لا يوجد حساب بهذا البريد.";
+
+        }
+
+        showMessage(message);
+
+      } finally {
+
+        authSubmit.disabled = false;
+
       }
 
     }
   );
 
 
-  async function loadSubjects() {
+  /* ==========================================
+     LOGOUT
+  ========================================== */
 
-    const subjectsContainer =
-      document.getElementById("subjects");
+  logoutBtn.addEventListener(
+    "click",
+    async () => {
 
-    try {
+      try {
 
-      const snapshot =
-        await getDocs(
-          collection(db, "subjects")
-        );
+        await signOut(auth);
 
-      if (snapshot.empty) {
+      } catch (error) {
 
-        subjectsContainer.innerHTML =
-          '<div class="empty">لا توجد مواد مضافة حاليًا.</div>';
+        console.error(error);
 
-        return;
       }
 
-      subjectsContainer.innerHTML = "";
-
-      snapshot.forEach(doc => {
-
-        const subject =
-          doc.data();
-
-        const card =
-          document.createElement("div");
-
-        card.className =
-          "subject-card";
-
-        card.innerHTML = `
-          <h3>${subject.name || "مادة"}</h3>
-          <p>${subject.description || ""}</p>
-        `;
-
-        subjectsContainer.appendChild(card);
-
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      subjectsContainer.innerHTML =
-        '<div class="empty">تعذر تحميل المواد حاليًا.</div>';
     }
-  }
+  );
 
+
+  /* ==========================================
+     AUTH STATE
+  ========================================== */
 
   onAuthStateChanged(
     auth,
@@ -552,16 +878,162 @@
 
       if (user) {
 
-        console.log(
-          "Logged in:",
-          user.uid
-        );
+        guestButtons.style.display =
+          "none";
+
+        userBox.style.display =
+          "flex";
+
+        userEmail.textContent =
+          user.email || "حسابك";
+
+      } else {
+
+        guestButtons.style.display =
+          "block";
+
+        userBox.style.display =
+          "none";
+
+        userEmail.textContent =
+          "";
 
       }
 
     }
   );
 
+
+  /* ==========================================
+     LOAD SUBJECTS
+  ========================================== */
+
+  async function loadSubjects() {
+
+    const container =
+      document.getElementById("subjects");
+
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(
+            db,
+            "subjects"
+          )
+        );
+
+
+      if (snapshot.empty) {
+
+        container.innerHTML = `
+          <div class="empty">
+            لا توجد مواد مضافة حاليًا.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      container.innerHTML = "";
+
+
+      snapshot.forEach(
+        item => {
+
+          const data =
+            item.data();
+
+
+          if (
+            data.isActive === false
+          ) {
+
+            return;
+
+          }
+
+
+          const card =
+            document.createElement(
+              "div"
+            );
+
+          card.className =
+            "subject-card";
+
+
+          const title =
+            document.createElement(
+              "h3"
+            );
+
+          title.textContent =
+            data.name ||
+            "مادة دراسية";
+
+
+          const description =
+            document.createElement(
+              "p"
+            );
+
+          description.textContent =
+            data.description ||
+            "لا يوجد وصف للمادة.";
+
+
+          card.appendChild(title);
+
+          card.appendChild(
+            description
+          );
+
+
+          container.appendChild(
+            card
+          );
+
+        }
+      );
+
+
+      if (!container.children.length) {
+
+        container.innerHTML = `
+          <div class="empty">
+            لا توجد مواد نشطة حاليًا.
+          </div>
+        `;
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "Firestore Error:",
+        error
+      );
+
+
+      container.innerHTML = `
+        <div class="empty">
+          تعذر تحميل المواد حاليًا.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  /* ==========================================
+     START
+  ========================================== */
 
   loadSubjects();
 
