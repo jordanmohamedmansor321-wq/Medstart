@@ -2,98 +2,345 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MedStart - الإدارة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة إدارة MedStart</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
-margin:0;
-font-family:Arial,Tahoma,sans-serif;
-background:#f5f7fb;
-color:#172033
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:#f4f7fb;
+  color:#172033
 }
+
+button,input,textarea,select{font-family:inherit}
+
 header{
-background:#fff;
-border-bottom:1px solid #e5e7eb;
-padding:16px 20px
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
+  position:sticky;
+  top:0;
+  z-index:50
 }
+
 .header{
-max-width:1200px;
-margin:auto;
-display:flex;
-justify-content:space-between;
-align-items:center
+  max-width:1400px;
+  margin:auto;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px
 }
+
 .logo{
-font-size:24px;
-font-weight:800;
-color:#2563eb
+  font-size:24px;
+  font-weight:900;
+  color:#2563eb
 }
-.container{
-max-width:1200px;
-margin:auto;
-padding:25px 20px
+
+.admin-info{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:#64748b
 }
+
+.logout{
+  background:#dc2626;
+  color:white;
+  border:0;
+  padding:10px 15px;
+  border-radius:9px;
+  cursor:pointer
+}
+
+.layout{
+  max-width:1400px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:250px 1fr;
+  min-height:calc(100vh - 70px)
+}
+
+.sidebar{
+  background:#fff;
+  border-left:1px solid #e5e7eb;
+  padding:20px
+}
+
+.nav-btn{
+  width:100%;
+  border:0;
+  background:transparent;
+  padding:13px;
+  margin-bottom:7px;
+  border-radius:10px;
+  text-align:right;
+  cursor:pointer;
+  font-size:14px
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+  background:#eff6ff;
+  color:#2563eb
+}
+
+.content{
+  padding:25px
+}
+
+.page{
+  display:none
+}
+
+.page.active{
+  display:block
+}
+
+.page-title{
+  margin-bottom:20px
+}
+
+.page-title h1{
+  margin:0 0 7px
+}
+
+.page-title p{
+  margin:0;
+  color:#64748b
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:15px;
+  margin-bottom:25px
+}
+
 .card{
-background:#fff;
-border-radius:16px;
-padding:20px;
-margin-bottom:20px;
-box-shadow:0 4px 20px rgba(0,0,0,.05)
+  background:white;
+  border:1px solid #e5e7eb;
+  border-radius:15px;
+  padding:20px
 }
-h2{margin-top:0}
-input,textarea,select{
-width:100%;
-padding:12px;
-margin:7px 0;
-border:1px solid #d1d5db;
-border-radius:9px;
-font-size:15px
+
+.card .number{
+  font-size:30px;
+  font-weight:900;
+  color:#2563eb
 }
-textarea{min-height:100px;resize:vertical}
-button{
-border:0;
-border-radius:9px;
-padding:11px 16px;
-cursor:pointer;
-font-weight:700
+
+.card .label{
+  color:#64748b;
+  margin-top:6px
 }
-.primary{background:#2563eb;color:#fff}
-.danger{background:#dc2626;color:#fff}
-.secondary{background:#eef2ff;color:#2563eb}
-.hidden{display:none}
-.message{
-padding:12px;
-border-radius:9px;
-margin:10px 0;
-background:#eef2ff
+
+.panel{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:15px;
+  padding:20px;
+  margin-bottom:20px
 }
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:15px
+
+.panel h2{
+  margin-top:0
 }
-.item{
-border:1px solid #e5e7eb;
-border-radius:12px;
-padding:15px
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px
 }
-.item h3{margin-top:0}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px
+}
+
+.field.full{
+  grid-column:1/-1
+}
+
+.field label{
+  font-size:14px;
+  font-weight:700
+}
+
+.field input,
+.field textarea,
+.field select{
+  width:100%;
+  padding:12px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  outline:none;
+  background:white
+}
+
+.field textarea{
+  min-height:100px;
+  resize:vertical
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+  border-color:#2563eb
+}
+
+.primary{
+  background:#2563eb;
+  color:white;
+  border:0;
+  padding:12px 18px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700
+}
+
+.secondary{
+  background:#e5e7eb;
+  color:#172033;
+  border:0;
+  padding:12px 18px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700
+}
+
+.danger{
+  background:#dc2626;
+  color:white;
+  border:0;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer
+}
+
+.small{
+  padding:7px 10px;
+  font-size:12px
+}
+
 .actions{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-margin-top:10px
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px
 }
+
+.table-wrap{
+  overflow:auto
+}
+
 table{
-width:100%;
-border-collapse:collapse
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px
 }
+
 th,td{
-padding:10px;
-border-bottom:1px solid #e5e7eb;
-text-align:right
+  padding:12px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:right
+}
+
+th{
+  background:#f8fafc
+}
+
+.empty{
+  text-align:center;
+  padding:30px;
+  color:#64748b
+}
+
+.message{
+  display:none;
+  margin:15px 0;
+  padding:12px;
+  border-radius:9px
+}
+
+.message.show{
+  display:block
+}
+
+.success{
+  background:#dcfce7;
+  color:#166534
+}
+
+.error{
+  background:#fee2e2;
+  color:#991b1b
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:12px;
+  background:#e0e7ff;
+  color:#3730a3
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px
+}
+
+.modal.active{
+  display:flex
+}
+
+.modal-box{
+  width:100%;
+  max-width:650px;
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:18px;
+  padding:25px
+}
+
+@media(max-width:800px){
+  .layout{
+    display:block
+  }
+
+  .sidebar{
+    border-left:0;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    overflow:auto;
+    gap:7px
+  }
+
+  .nav-btn{
+    min-width:max-content;
+    margin:0
+  }
+
+  .form-grid{
+    grid-template-columns:1fr
+  }
+
+  .field.full{
+    grid-column:auto
+  }
 }
 </style>
 </head>
@@ -101,813 +348,1797 @@ text-align:right
 <body>
 
 <header>
-<div class="header">
-<div class="logo">MedStart Admin</div>
-<button id="logoutBtn" class="secondary">تسجيل الخروج</button>
-</div>
+  <div class="header">
+
+    <div class="logo">
+      MedStart — لوحة الإدارة
+    </div>
+
+    <div class="admin-info">
+      <span id="adminEmail">جاري التحقق...</span>
+      <button class="logout" id="logoutBtn">
+        تسجيل الخروج
+      </button>
+    </div>
+
+  </div>
 </header>
 
-<div class="container">
 
-<div id="loading" class="card">
-جاري التحقق من صلاحيات الإدارة...
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <button class="nav-btn active" data-page="dashboard">
+      📊 الرئيسية
+    </button>
+
+    <button class="nav-btn" data-page="settings">
+      🎨 إعدادات الموقع
+    </button>
+
+    <button class="nav-btn" data-page="subjects">
+      📚 المواد
+    </button>
+
+    <button class="nav-btn" data-page="units">
+      📦 الوحدات
+    </button>
+
+    <button class="nav-btn" data-page="lessons">
+      📖 الدروس
+    </button>
+
+    <button class="nav-btn" data-page="students">
+      👨‍🎓 الطلاب
+    </button>
+
+    <button class="nav-btn" data-page="wallet">
+      💰 المحفظة
+    </button>
+
+    <button class="nav-btn" data-page="subscriptions">
+      🛒 الاشتراكات
+    </button>
+
+  </aside>
+
+
+  <main class="content">
+
+    <!-- DASHBOARD -->
+
+    <section class="page active" id="page-dashboard">
+
+      <div class="page-title">
+        <h1>لوحة التحكم</h1>
+        <p>إدارة منصة MedStart بالكامل.</p>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="number" id="countStudents">0</div>
+          <div class="label">الطلاب</div>
+        </div>
+
+        <div class="card">
+          <div class="number" id="countSubjects">0</div>
+          <div class="label">المواد</div>
+        </div>
+
+        <div class="card">
+          <div class="number" id="countUnits">0</div>
+          <div class="label">الوحدات</div>
+        </div>
+
+        <div class="card">
+          <div class="number" id="countLessons">0</div>
+          <div class="label">الدروس</div>
+        </div>
+
+        <div class="card">
+          <div class="number" id="countSubscriptions">0</div>
+          <div class="label">الاشتراكات</div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SETTINGS -->
+
+    <section class="page" id="page-settings">
+
+      <div class="page-title">
+        <h1>إعدادات الموقع</h1>
+        <p>من هنا يمكنك تغيير هوية وشكل الموقع.</p>
+      </div>
+
+      <div class="panel">
+
+        <div id="settingsMessage" class="message"></div>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>اسم الموقع</label>
+            <input id="siteName" placeholder="MedStart">
+          </div>
+
+          <div class="field">
+            <label>رابط الشعار</label>
+            <input id="logoUrl" placeholder="https://...">
+          </div>
+
+          <div class="field full">
+            <label>وصف الموقع</label>
+            <textarea id="siteDescription"></textarea>
+          </div>
+
+          <div class="field full">
+            <label>العنوان الرئيسي</label>
+            <input id="heroTitle">
+          </div>
+
+          <div class="field full">
+            <label>الوصف الرئيسي</label>
+            <textarea id="heroDescription"></textarea>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="saveSettings">
+            حفظ إعدادات الموقع
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SUBJECTS -->
+
+    <section class="page" id="page-subjects">
+
+      <div class="page-title">
+        <h1>المواد الدراسية</h1>
+        <p>إضافة وتعديل وحذف المواد.</p>
+      </div>
+
+      <div class="panel">
+
+        <h2>إضافة مادة</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>اسم المادة</label>
+            <input id="subjectName">
+          </div>
+
+          <div class="field">
+            <label>رابط الصورة</label>
+            <input id="subjectImage">
+          </div>
+
+          <div class="field full">
+            <label>الوصف</label>
+            <textarea id="subjectDescription"></textarea>
+          </div>
+
+          <div class="field">
+            <label>الترتيب</label>
+            <input id="subjectOrder" type="number" value="0">
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="addSubject">
+            إضافة المادة
+          </button>
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <h2>المواد الحالية</h2>
+
+        <div class="table-wrap">
+          <table>
+
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>الوصف</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+
+            <tbody id="subjectsTable"></tbody>
+
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- UNITS -->
+
+    <section class="page" id="page-units">
+
+      <div class="page-title">
+        <h1>الوحدات</h1>
+        <p>إضافة الوحدات والأسعار وربطها بالمواد.</p>
+      </div>
+
+      <div class="panel">
+
+        <h2>إضافة وحدة</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>المادة</label>
+            <select id="unitSubject"></select>
+          </div>
+
+          <div class="field">
+            <label>اسم الوحدة</label>
+            <input id="unitTitle">
+          </div>
+
+          <div class="field full">
+            <label>وصف الوحدة</label>
+            <textarea id="unitDescription"></textarea>
+          </div>
+
+          <div class="field">
+            <label>السعر بالدينار</label>
+            <input id="unitPrice" type="number" min="0" value="0">
+          </div>
+
+          <div class="field">
+            <label>رابط الصورة</label>
+            <input id="unitImage">
+          </div>
+
+          <div class="field">
+            <label>الترتيب</label>
+            <input id="unitOrder" type="number" value="0">
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="addUnit">
+            إضافة الوحدة
+          </button>
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <h2>الوحدات الحالية</h2>
+
+        <div class="table-wrap">
+          <table>
+
+            <thead>
+              <tr>
+                <th>الوحدة</th>
+                <th>المادة</th>
+                <th>السعر</th>
+                <th>الحالة</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+
+            <tbody id="unitsTable"></tbody>
+
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- LESSONS -->
+
+    <section class="page" id="page-lessons">
+
+      <div class="page-title">
+        <h1>الدروس</h1>
+        <p>إضافة محتوى الدروس وروابط الفيديو والملفات والاختبارات.</p>
+      </div>
+
+      <div class="panel">
+
+        <h2>إضافة درس</h2>
+
+        <div class="form-grid">
+
+          <div class="field">
+            <label>الوحدة</label>
+            <select id="lessonUnit"></select>
+          </div>
+
+          <div class="field">
+            <label>اسم الدرس</label>
+            <input id="lessonTitle">
+          </div>
+
+          <div class="field full">
+            <label>وصف الدرس</label>
+            <textarea id="lessonDescription"></textarea>
+          </div>
+
+          <div class="field">
+            <label>رابط الفيديو</label>
+            <input id="videoUrl">
+          </div>
+
+          <div class="field">
+            <label>رابط PDF</label>
+            <input id="pdfUrl">
+          </div>
+
+          <div class="field">
+            <label>رابط PDF الحل</label>
+            <input id="solutionPdfUrl">
+          </div>
+
+          <div class="field">
+            <label>رابط الاختبار</label>
+            <input id="quizUrl">
+          </div>
+
+          <div class="field">
+            <label>الترتيب</label>
+            <input id="lessonOrder" type="number" value="0">
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="addLesson">
+            إضافة الدرس
+          </button>
+        </div>
+
+      </div>
+
+
+      <div class="panel">
+
+        <h2>الدروس الحالية</h2>
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>الدرس</th>
+                <th>الوحدة</th>
+                <th>فيديو</th>
+                <th>PDF</th>
+                <th>اختبار</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+
+            <tbody id="lessonsTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- STUDENTS -->
+
+    <section class="page" id="page-students">
+
+      <div class="page-title">
+        <h1>الطلاب</h1>
+        <p>عرض حسابات الطلاب وأرصدة المحافظ.</p>
+      </div>
+
+      <div class="panel">
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>الاسم</th>
+                <th>البريد</th>
+                <th>الدور</th>
+                <th>الرصيد</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+
+            <tbody id="studentsTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- WALLET -->
+
+    <section class="page" id="page-wallet">
+
+      <div class="page-title">
+        <h1>إدارة المحفظة</h1>
+        <p>إضافة أو خصم رصيد من حساب الطالب.</p>
+      </div>
+
+      <div class="panel">
+
+        <div class="form-grid">
+
+          <div class="field full">
+            <label>الطالب</label>
+            <select id="walletStudent"></select>
+          </div>
+
+          <div class="field">
+            <label>المبلغ</label>
+            <input id="walletAmount" type="number" min="0">
+          </div>
+
+          <div class="field">
+            <label>نوع العملية</label>
+            <select id="walletType">
+              <option value="deposit">إضافة رصيد</option>
+              <option value="adjustment">خصم رصيد</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label>الوصف</label>
+            <textarea id="walletDescription"></textarea>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="walletSubmit">
+            تنفيذ العملية
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SUBSCRIPTIONS -->
+
+    <section class="page" id="page-subscriptions">
+
+      <div class="page-title">
+        <h1>الاشتراكات</h1>
+        <p>عرض جميع اشتراكات الطلاب.</p>
+      </div>
+
+      <div class="panel">
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>الطالب</th>
+                <th>الوحدة</th>
+                <th>السعر</th>
+                <th>التاريخ</th>
+              </tr>
+            </thead>
+
+            <tbody id="subscriptionsTable"></tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
 </div>
 
-<div id="adminPanel" class="hidden">
-
-<div id="message"></div>
-
-<!-- ================= SUBJECT ================= -->
-
-<div class="card">
-
-<h2>إضافة مادة</h2>
-
-<input id="subjectName" placeholder="اسم المادة">
-
-<textarea id="subjectDescription"
-placeholder="وصف المادة"></textarea>
-
-<input id="subjectImage"
-placeholder="رابط صورة المادة">
-
-<input id="subjectOrder"
-type="number"
-placeholder="ترتيب المادة">
-
-<button class="primary" id="addSubject">
-إضافة المادة
-</button>
-
-</div>
-
-<!-- ================= SUBJECTS ================= -->
-
-<div class="card">
-
-<h2>المواد الحالية</h2>
-
-<div id="subjectsList" class="grid">
-</div>
-
-</div>
-
-<!-- ================= UNIT ================= -->
-
-<div class="card">
-
-<h2>إضافة وحدة</h2>
-
-<select id="unitSubject">
-<option value="">اختر المادة</option>
-</select>
-
-<input id="unitTitle"
-placeholder="اسم الوحدة">
-
-<textarea id="unitDescription"
-placeholder="وصف الوحدة"></textarea>
-
-<input id="unitImage"
-placeholder="رابط صورة الوحدة">
-
-<input id="unitPrice"
-type="number"
-step="0.01"
-placeholder="سعر الوحدة">
-
-<input id="unitOrder"
-type="number"
-placeholder="ترتيب الوحدة">
-
-<button class="primary" id="addUnit">
-إضافة الوحدة
-</button>
-
-</div>
-
-<!-- ================= UNITS ================= -->
-
-<div class="card">
-
-<h2>الوحدات</h2>
-
-<div id="unitsList" class="grid">
-</div>
-
-</div>
-
-<!-- ================= LESSON ================= -->
-
-<div class="card">
-
-<h2>إضافة درس</h2>
-
-<select id="lessonUnit">
-<option value="">اختر الوحدة</option>
-</select>
-
-<input id="lessonTitle"
-placeholder="عنوان الدرس">
-
-<textarea id="lessonDescription"
-placeholder="وصف الدرس"></textarea>
-
-<input id="lessonOrder"
-type="number"
-placeholder="ترتيب الدرس">
-
-<h3>محتوى الدرس</h3>
-
-<input id="videoUrl"
-placeholder="رابط الفيديو">
-
-<input id="pdfUrl"
-placeholder="رابط PDF">
-
-<input id="solutionPdfUrl"
-placeholder="رابط PDF الحل">
-
-<input id="quizUrl"
-placeholder="رابط الاختبار">
-
-<textarea id="lessonNotes"
-placeholder="ملاحظات الدرس"></textarea>
-
-<button class="primary" id="addLesson">
-إضافة الدرس
-</button>
-
-</div>
-
-<!-- ================= LESSONS ================= -->
-
-<div class="card">
-
-<h2>الدروس</h2>
-
-<div id="lessonsList" class="grid">
-</div>
-
-</div>
-
-<!-- ================= STUDENTS ================= -->
-
-<div class="card">
-
-<h2>الطلاب</h2>
-
-<div id="studentsList">
-جاري التحميل...
-</div>
-
-</div>
-
-</div>
-</div>
 
 <script type="module">
 
 import {
-initializeApp
+  initializeApp
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
-getAuth,
-onAuthStateChanged,
-signOut
+  getAuth,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 import {
-getFirestore,
-collection,
-doc,
-getDoc,
-getDocs,
-addDoc,
-deleteDoc,
-query,
-where,
-orderBy
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
-const firebaseConfig={
+/* =========================
+   FIREBASE
+========================= */
 
-apiKey:"AIzaSyAgpyK22xVCCyfrcdkwYwv8Y7brmpEsBDs",
-
-authDomain:"medstart-ee44d.firebaseapp.com",
-
-projectId:"medstart-ee44d",
-
-storageBucket:"medstart-ee44d.firebasestorage.app",
-
-messagingSenderId:"378114086129",
-
-appId:"1:378114086129:web:2ca927eb5d4a52fe83c550",
-
-measurementId:"G-XWXB59DX4Y"
-
+const firebaseConfig = {
+  apiKey:"AIzaSyAgpyK22xVCCyfrcdkwYwv8Y7brmpEsBDs",
+  authDomain:"medstart-ee44d.firebaseapp.com",
+  projectId:"medstart-ee44d",
+  storageBucket:"medstart-ee44d.firebasestorage.app",
+  messagingSenderId:"378114086129",
+  appId:"1:378114086129:web:2ca927eb5d4a52fe83c550",
+  measurementId:"G-XWXB59DX4Y"
 };
 
-
-const app=initializeApp(firebaseConfig);
-
-const auth=getAuth(app);
-
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 
-const loading=document.getElementById("loading");
-const adminPanel=document.getElementById("adminPanel");
-const message=document.getElementById("message");
+/* =========================
+   STATE
+========================= */
+
+let currentUser = null;
+
+let subjects = [];
+let units = [];
+let lessons = [];
+let users = [];
+let subscriptions = [];
 
 
-function showMessage(text){
+/* =========================
+   AUTH / ADMIN CHECK
+========================= */
 
-message.textContent=text;
-message.className="message";
+onAuthStateChanged(auth, async user => {
 
-setTimeout(()=>{
-message.textContent="";
-},4000);
+  if (!user) {
+    location.href = "index.html";
+    return;
+  }
 
-}
+  currentUser = user;
 
+  document.getElementById("adminEmail").textContent =
+    user.email || "Admin";
 
-async function checkAdmin(user){
+  const userRef = doc(db,"users",user.uid);
+  const userSnap = await getDoc(userRef);
 
-if(!user){
+  if (!userSnap.exists() ||
+      userSnap.data().role !== "admin") {
 
-location.href="index.html";
-return;
-}
+    alert("ليس لديك صلاحية الدخول إلى لوحة الإدارة.");
 
-const snap=await getDoc(
-doc(db,"users",user.uid)
-);
+    await signOut(auth);
 
-if(!snap.exists() || snap.data().role!=="admin"){
+    location.href = "index.html";
 
-loading.innerHTML=
-"ليس لديك صلاحية الدخول إلى لوحة الإدارة.";
+    return;
+  }
 
-return;
-}
-
-loading.classList.add("hidden");
-adminPanel.classList.remove("hidden");
-
-loadSubjects();
-loadUnits();
-loadLessons();
-loadStudents();
-
-}
-
-
-onAuthStateChanged(auth,user=>{
-
-checkAdmin(user).catch(error=>{
-
-console.error(error);
-
-loading.textContent=
-"حدث خطأ أثناء التحقق من الحساب.";
-
-});
+  await initializeAdmin();
 
 });
 
 
-/* ================= SUBJECTS ================= */
+/* =========================
+   NAVIGATION
+========================= */
+
+document.querySelectorAll(".nav-btn")
+.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document.querySelectorAll(".nav-btn")
+    .forEach(x => x.classList.remove("active"));
+
+    document.querySelectorAll(".page")
+    .forEach(x => x.classList.remove("active"));
+
+    button.classList.add("active");
+
+    document
+      .getElementById("page-" + button.dataset.page)
+      .classList.add("active");
+
+  });
+
+});
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document.getElementById("logoutBtn")
+.addEventListener("click", async () => {
+
+  await signOut(auth);
+
+  location.href = "index.html";
+
+});
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+async function initializeAdmin(){
+
+  await Promise.all([
+    loadSettings(),
+    loadSubjects(),
+    loadUnits(),
+    loadLessons(),
+    loadUsers(),
+    loadSubscriptions()
+  ]);
+
+  updateDashboard();
+
+  fillSelects();
+
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+async function loadSettings(){
+
+  const ref = doc(db,"siteSettings","main");
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+
+    document.getElementById("siteName").value =
+      "MedStart";
+
+    document.getElementById("siteDescription").value =
+      "منصة تعليمية لطلاب سنة إعداد الطب";
+
+    document.getElementById("heroTitle").value =
+      "مرحبًا بك في MedStart";
+
+    document.getElementById("heroDescription").value =
+      "منصتك التعليمية لطلاب سنة إعداد الطب.";
+
+    return;
+  }
+
+  const data = snap.data();
+
+  document.getElementById("siteName").value =
+    data.siteName || "";
+
+  document.getElementById("logoUrl").value =
+    data.logoUrl || "";
+
+  document.getElementById("siteDescription").value =
+    data.siteDescription || "";
+
+  document.getElementById("heroTitle").value =
+    data.heroTitle || "";
+
+  document.getElementById("heroDescription").value =
+    data.heroDescription || "";
+
+}
+
+
+document.getElementById("saveSettings")
+.addEventListener("click", async () => {
+
+  try {
+
+    await setDoc(
+      doc(db,"siteSettings","main"),
+      {
+        siteName:
+          document.getElementById("siteName").value.trim(),
+
+        logoUrl:
+          document.getElementById("logoUrl").value.trim(),
+
+        siteDescription:
+          document.getElementById("siteDescription").value.trim(),
+
+        heroTitle:
+          document.getElementById("heroTitle").value.trim(),
+
+        heroDescription:
+          document.getElementById("heroDescription").value.trim(),
+
+        updatedAt:Date.now()
+      },
+      {merge:true}
+    );
+
+    showMessage(
+      "settingsMessage",
+      "تم حفظ إعدادات الموقع.",
+      true
+    );
+
+  } catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "settingsMessage",
+      "حدث خطأ أثناء حفظ الإعدادات.",
+      false
+    );
+
+  }
+
+});
+
+
+/* =========================
+   SUBJECTS
+========================= */
 
 async function loadSubjects(){
 
-const list=document.getElementById("subjectsList");
+  const snap =
+    await getDocs(collection(db,"subjects"));
 
-const select=document.getElementById("unitSubject");
+  subjects = [];
 
-list.innerHTML="";
-select.innerHTML=
-'<option value="">اختر المادة</option>';
+  snap.forEach(item => {
 
-const snap=await getDocs(
-query(
-collection(db,"subjects"),
-orderBy("sortOrder")
-)
-);
+    subjects.push({
+      id:item.id,
+      ...item.data()
+    });
 
-snap.forEach(item=>{
+  });
 
-const data=item.data();
+  renderSubjects();
 
-const card=document.createElement("div");
-
-card.className="item";
-
-card.innerHTML=`
-
-<h3>${escapeHtml(data.name||"")}</h3>
-
-<p>${escapeHtml(data.description||"")}</p>
-
-<div class="actions">
-
-<button
-class="danger"
-data-delete-subject="${item.id}">
-حذف
-</button>
-
-</div>
-
-`;
-
-list.appendChild(card);
+}
 
 
-const option=document.createElement("option");
+function renderSubjects(){
 
-option.value=item.id;
+  const table =
+    document.getElementById("subjectsTable");
 
-option.textContent=data.name;
+  table.innerHTML = "";
 
-select.appendChild(option);
+  if (!subjects.length){
 
-});
+    table.innerHTML =
+      `<tr><td colspan="4" class="empty">
+        لا توجد مواد.
+      </td></tr>`;
+
+    return;
+  }
+
+  subjects.forEach(subject => {
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${escapeHtml(subject.name || "")}</td>
+      <td>${escapeHtml(subject.description || "-")}</td>
+      <td>
+        <span class="badge">
+          ${subject.isActive === false ? "مخفية" : "نشطة"}
+        </span>
+      </td>
+      <td>
+        <button class="danger small"
+          data-delete-subject="${subject.id}">
+          حذف
+        </button>
+      </td>
+    `;
+
+    table.appendChild(tr);
+
+  });
 
 }
 
 
 document.getElementById("addSubject")
-.addEventListener("click",async()=>{
+.addEventListener("click", async () => {
 
-const name=
-document.getElementById("subjectName").value.trim();
+  const name =
+    document.getElementById("subjectName").value.trim();
 
-if(!name){
+  if (!name){
 
-showMessage("اكتب اسم المادة");
+    alert("اكتب اسم المادة.");
 
-return;
-}
+    return;
+  }
 
-await addDoc(
-collection(db,"subjects"),
-{
-name,
-description:
-document.getElementById("subjectDescription").value.trim(),
+  await addDoc(
+    collection(db,"subjects"),
+    {
+      name,
+      description:
+        document.getElementById("subjectDescription").value.trim(),
 
-imageUrl:
-document.getElementById("subjectImage").value.trim(),
+      imageUrl:
+        document.getElementById("subjectImage").value.trim(),
 
-sortOrder:
-Number(document.getElementById("subjectOrder").value)||0,
+      sortOrder:
+        Number(document.getElementById("subjectOrder").value) || 0,
 
-isActive:true,
+      isActive:true,
 
-createdAt:Date.now()
-}
-);
+      createdAt:Date.now()
+    }
+  );
 
-showMessage("تمت إضافة المادة");
+  document.getElementById("subjectName").value = "";
+  document.getElementById("subjectDescription").value = "";
+  document.getElementById("subjectImage").value = "";
 
-document.getElementById("subjectName").value="";
-document.getElementById("subjectDescription").value="";
-document.getElementById("subjectImage").value="";
-document.getElementById("subjectOrder").value="";
+  await loadSubjects();
 
-loadSubjects();
+  fillSelects();
+
+  updateDashboard();
 
 });
 
 
-/* ================= UNITS ================= */
+document.addEventListener("click", async event => {
+
+  const id =
+    event.target.dataset.deleteSubject;
+
+  if (!id) return;
+
+  if (!confirm("هل تريد حذف هذه المادة؟")) return;
+
+  await deleteDoc(
+    doc(db,"subjects",id)
+  );
+
+  await loadSubjects();
+
+  fillSelects();
+
+  updateDashboard();
+
+});
+
+
+/* =========================
+   UNITS
+========================= */
 
 async function loadUnits(){
 
-const list=document.getElementById("unitsList");
+  const snap =
+    await getDocs(collection(db,"units"));
 
-const select=document.getElementById("lessonUnit");
+  units = [];
 
-list.innerHTML="";
-select.innerHTML=
-'<option value="">اختر الوحدة</option>';
+  snap.forEach(item => {
 
-const snap=await getDocs(
-query(
-collection(db,"units"),
-orderBy("sortOrder")
-)
-);
+    units.push({
+      id:item.id,
+      ...item.data()
+    });
 
-snap.forEach(item=>{
+  });
 
-const data=item.data();
+  renderUnits();
 
-const card=document.createElement("div");
-
-card.className="item";
-
-card.innerHTML=`
-
-<h3>${escapeHtml(data.title||"")}</h3>
-
-<p>${escapeHtml(data.description||"")}</p>
-
-<p>
-السعر:
-${Number(data.price||0).toFixed(2)}
-</p>
-
-<div class="actions">
-
-<button
-class="danger"
-data-delete-unit="${item.id}">
-حذف
-</button>
-
-</div>
-
-`;
-
-list.appendChild(card);
+}
 
 
-const option=document.createElement("option");
+function renderUnits(){
 
-option.value=item.id;
+  const table =
+    document.getElementById("unitsTable");
 
-option.textContent=data.title;
+  table.innerHTML = "";
 
-select.appendChild(option);
+  if (!units.length){
 
-});
+    table.innerHTML =
+      `<tr><td colspan="5" class="empty">
+        لا توجد وحدات.
+      </td></tr>`;
+
+    return;
+  }
+
+  units.forEach(unit => {
+
+    const subject =
+      subjects.find(x => x.id === unit.subjectId);
+
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${escapeHtml(unit.title || "")}</td>
+
+      <td>
+        ${escapeHtml(subject?.name || "غير محددة")}
+      </td>
+
+      <td>
+        ${Number(unit.price || 0).toFixed(2)} دينار
+      </td>
+
+      <td>
+        <span class="badge">
+          ${unit.isActive === false ? "مخفية" : "نشطة"}
+        </span>
+      </td>
+
+      <td>
+        <button class="danger small"
+          data-delete-unit="${unit.id}">
+          حذف
+        </button>
+      </td>
+    `;
+
+    table.appendChild(tr);
+
+  });
 
 }
 
 
 document.getElementById("addUnit")
-.addEventListener("click",async()=>{
+.addEventListener("click", async () => {
 
-const subjectId=
-document.getElementById("unitSubject").value;
+  const subjectId =
+    document.getElementById("unitSubject").value;
 
-const title=
-document.getElementById("unitTitle").value.trim();
+  const title =
+    document.getElementById("unitTitle").value.trim();
 
-if(!subjectId || !title){
+  if (!subjectId){
 
-showMessage("اختر المادة واكتب اسم الوحدة");
+    alert("اختر المادة.");
 
-return;
-}
+    return;
+  }
 
-await addDoc(
-collection(db,"units"),
-{
+  if (!title){
 
-subjectId,
+    alert("اكتب اسم الوحدة.");
 
-title,
+    return;
+  }
 
-description:
-document.getElementById("unitDescription").value.trim(),
+  await addDoc(
+    collection(db,"units"),
+    {
 
-imageUrl:
-document.getElementById("unitImage").value.trim(),
+      subjectId,
 
-price:
-Number(document.getElementById("unitPrice").value)||0,
+      title,
 
-sortOrder:
-Number(document.getElementById("unitOrder").value)||0,
+      description:
+        document.getElementById("unitDescription").value.trim(),
 
-isActive:true,
+      imageUrl:
+        document.getElementById("unitImage").value.trim(),
 
-createdAt:Date.now()
+      price:
+        Number(document.getElementById("unitPrice").value) || 0,
 
-}
-);
+      sortOrder:
+        Number(document.getElementById("unitOrder").value) || 0,
 
-showMessage("تمت إضافة الوحدة");
+      isActive:true,
 
-document.getElementById("unitTitle").value="";
-document.getElementById("unitDescription").value="";
-document.getElementById("unitImage").value="";
-document.getElementById("unitPrice").value="";
-document.getElementById("unitOrder").value="";
+      createdAt:Date.now(),
 
-loadUnits();
+      updatedAt:Date.now()
+
+    }
+  );
+
+  document.getElementById("unitTitle").value = "";
+  document.getElementById("unitDescription").value = "";
+  document.getElementById("unitImage").value = "";
+  document.getElementById("unitPrice").value = "0";
+
+  await loadUnits();
+
+  fillSelects();
+
+  updateDashboard();
 
 });
 
 
-/* ================= LESSONS ================= */
+document.addEventListener("click", async event => {
+
+  const id =
+    event.target.dataset.deleteUnit;
+
+  if (!id) return;
+
+  if (!confirm("هل تريد حذف هذه الوحدة؟")) return;
+
+  await deleteDoc(
+    doc(db,"units",id)
+  );
+
+  await loadUnits();
+
+  fillSelects();
+
+  updateDashboard();
+
+});
+
+
+/* =========================
+   LESSONS
+========================= */
 
 async function loadLessons(){
 
-const list=
-document.getElementById("lessonsList");
+  const snap =
+    await getDocs(collection(db,"lessons"));
 
-list.innerHTML="";
+  lessons = [];
 
-const snap=await getDocs(
-query(
-collection(db,"lessons"),
-orderBy("sortOrder")
-)
-);
+  snap.forEach(item => {
 
-snap.forEach(item=>{
+    lessons.push({
+      id:item.id,
+      ...item.data()
+    });
 
-const data=item.data();
+  });
 
-const card=
-document.createElement("div");
-
-card.className="item";
-
-card.innerHTML=`
-
-<h3>${escapeHtml(data.title||"")}</h3>
-
-<p>${escapeHtml(data.description||"")}</p>
-
-<div class="actions">
-
-<button
-class="danger"
-data-delete-lesson="${item.id}">
-حذف
-</button>
-
-</div>
-
-`;
-
-list.appendChild(card);
-
-});
+  renderLessons();
 
 }
 
 
-/* ================= ADD LESSON ================= */
+function renderLessons(){
+
+  const table =
+    document.getElementById("lessonsTable");
+
+  table.innerHTML = "";
+
+  if (!lessons.length){
+
+    table.innerHTML =
+      `<tr><td colspan="6" class="empty">
+        لا توجد دروس.
+      </td></tr>`;
+
+    return;
+  }
+
+  lessons.forEach(lesson => {
+
+    const unit =
+      units.find(x => x.id === lesson.unitId);
+
+    const tr =
+      document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${escapeHtml(lesson.title || "")}</td>
+
+      <td>
+        ${escapeHtml(unit?.title || "غير محددة")}
+      </td>
+
+      <td>${lesson.hasVideo ? "✅" : "—"}</td>
+
+      <td>${lesson.hasPdf ? "✅" : "—"}</td>
+
+      <td>${lesson.hasQuiz ? "✅" : "—"}</td>
+
+      <td>
+        <button class="danger small"
+          data-delete-lesson="${lesson.id}">
+          حذف
+        </button>
+      </td>
+    `;
+
+    table.appendChild(tr);
+
+  });
+
+}
+
 
 document.getElementById("addLesson")
-.addEventListener("click",async()=>{
+.addEventListener("click", async () => {
 
-const unitId=
-document.getElementById("lessonUnit").value;
+  const unitId =
+    document.getElementById("lessonUnit").value;
 
-const title=
-document.getElementById("lessonTitle").value.trim();
+  const title =
+    document.getElementById("lessonTitle").value.trim();
 
-if(!unitId || !title){
+  if (!unitId){
 
-showMessage("اختر الوحدة واكتب عنوان الدرس");
+    alert("اختر الوحدة.");
 
-return;
-}
+    return;
+  }
 
+  if (!title){
 
-const lessonRef=
-await addDoc(
-collection(db,"lessons"),
-{
+    alert("اكتب اسم الدرس.");
 
-unitId,
-
-title,
-
-description:
-document.getElementById("lessonDescription").value.trim(),
-
-sortOrder:
-Number(document.getElementById("lessonOrder").value)||0,
-
-isActive:true,
-
-createdAt:Date.now()
-
-}
-);
+    return;
+  }
 
 
-await addDoc(
-collection(db,"lessonContents"),
-{
+  const videoUrl =
+    document.getElementById("videoUrl").value.trim();
 
-lessonId:lessonRef.id,
+  const pdfUrl =
+    document.getElementById("pdfUrl").value.trim();
 
-videoUrl:
-document.getElementById("videoUrl").value.trim(),
+  const solutionPdfUrl =
+    document.getElementById("solutionPdfUrl").value.trim();
 
-pdfUrl:
-document.getElementById("pdfUrl").value.trim(),
-
-solutionPdfUrl:
-document.getElementById("solutionPdfUrl").value.trim(),
-
-quizUrl:
-document.getElementById("quizUrl").value.trim(),
-
-notes:
-document.getElementById("lessonNotes").value.trim(),
-
-videoAvailable:true,
-
-pdfAvailable:true,
-
-quizAvailable:true,
-
-createdAt:Date.now()
-
-}
-);
+  const quizUrl =
+    document.getElementById("quizUrl").value.trim();
 
 
-showMessage("تمت إضافة الدرس ومحتواه");
+  const lessonRef =
+    await addDoc(
+      collection(db,"lessons"),
+      {
 
-document.getElementById("lessonTitle").value="";
-document.getElementById("lessonDescription").value="";
-document.getElementById("lessonOrder").value="";
-document.getElementById("videoUrl").value="";
-document.getElementById("pdfUrl").value="";
-document.getElementById("solutionPdfUrl").value="";
-document.getElementById("quizUrl").value="";
-document.getElementById("lessonNotes").value="";
+        unitId,
 
-loadLessons();
+        title,
+
+        description:
+          document.getElementById("lessonDescription").value.trim(),
+
+        sortOrder:
+          Number(document.getElementById("lessonOrder").value) || 0,
+
+        isActive:true,
+
+        hasVideo:!!videoUrl,
+
+        hasPdf:!!pdfUrl,
+
+        hasQuiz:!!quizUrl,
+
+        createdAt:Date.now(),
+
+        updatedAt:Date.now()
+
+      }
+    );
+
+
+  await setDoc(
+    doc(
+      db,
+      "lessonContents",
+      lessonRef.id
+    ),
+    {
+
+      lessonId:lessonRef.id,
+
+      videoUrl,
+
+      pdfUrl,
+
+      solutionPdfUrl,
+
+      quizUrl,
+
+      isVideoAvailable:!!videoUrl,
+
+      isPdfAvailable:!!pdfUrl,
+
+      isQuizAvailable:!!quizUrl,
+
+      createdAt:Date.now(),
+
+      updatedAt:Date.now()
+
+    }
+  );
+
+
+  document.getElementById("lessonTitle").value = "";
+  document.getElementById("lessonDescription").value = "";
+  document.getElementById("videoUrl").value = "";
+  document.getElementById("pdfUrl").value = "";
+  document.getElementById("solutionPdfUrl").value = "";
+  document.getElementById("quizUrl").value = "";
+
+
+  await loadLessons();
+
+  updateDashboard();
+
+});
+
+
+document.addEventListener("click", async event => {
+
+  const id =
+    event.target.dataset.deleteLesson;
+
+  if (!id) return;
+
+  if (!confirm("هل تريد حذف هذا الدرس؟")) return;
+
+
+  await deleteDoc(
+    doc(db,"lessons",id)
+  );
+
+
+  const contentRef =
+    doc(db,"lessonContents",id);
+
+  const contentSnap =
+    await getDoc(contentRef);
+
+  if (contentSnap.exists()){
+
+    await deleteDoc(contentRef);
+
+  }
+
+
+  await loadLessons();
+
+  updateDashboard();
 
 });
 
 
-/* ================= STUDENTS ================= */
+/* =========================
+   USERS
+========================= */
 
-async function loadStudents(){
+async function loadUsers(){
 
-const container=
-document.getElementById("studentsList");
+  const snap =
+    await getDocs(collection(db,"users"));
 
-const snap=
-await getDocs(
-query(
-collection(db,"users"),
-where("role","==","student")
-)
-);
+  users = [];
 
-if(snap.empty){
+  snap.forEach(item => {
 
-container.innerHTML=
-"<p>لا يوجد طلاب حاليًا.</p>";
+    users.push({
+      id:item.id,
+      ...item.data()
+    });
 
-return;
-}
+  });
 
-const table=document.createElement("table");
-
-table.innerHTML=`
-
-<thead>
-
-<tr>
-
-<th>الاسم</th>
-<th>البريد</th>
-<th>UID</th>
-
-</tr>
-
-</thead>
-
-<tbody></tbody>
-
-`;
-
-const tbody=
-table.querySelector("tbody");
-
-snap.forEach(item=>{
-
-const data=item.data();
-
-const tr=document.createElement("tr");
-
-tr.innerHTML=`
-
-<td>
-${escapeHtml(data.fullName||"")}
-</td>
-
-<td>
-${escapeHtml(data.email||"")}
-</td>
-
-<td>
-${escapeHtml(item.id)}
-</td>
-
-`;
-
-tbody.appendChild(tr);
-
-});
-
-container.innerHTML="";
-
-container.appendChild(table);
+  renderUsers();
 
 }
 
 
-/* ================= DELETE ================= */
+function renderUsers(){
 
-document.addEventListener("click",async event=>{
+  const table =
+    document.getElementById("studentsTable");
 
-const subjectId=
-event.target.dataset.deleteSubject;
+  table.innerHTML = "";
 
-const unitId=
-event.target.dataset.deleteUnit;
+  const students =
+    users.filter(x => x.role !== "admin");
 
-const lessonId=
-event.target.dataset.deleteLesson;
+  if (!students.length){
 
+    table.innerHTML =
+      `<tr><td colspan="5" class="empty">
+        لا يوجد طلاب حتى الآن.
+      </td></tr>`;
 
-if(subjectId){
+    return;
+  }
 
-if(!confirm("حذف المادة؟"))return;
+  students.forEach(user => {
 
-await deleteDoc(
-doc(db,"subjects",subjectId)
-);
+    const tr =
+      document.createElement("tr");
 
-loadSubjects();
+    tr.innerHTML = `
+      <td>${escapeHtml(user.fullName || "-")}</td>
+
+      <td>${escapeHtml(user.email || "-")}</td>
+
+      <td>
+        <span class="badge">
+          ${escapeHtml(user.role || "student")}
+        </span>
+      </td>
+
+      <td>
+        ${Number(user.walletBalance || 0).toFixed(2)}
+        دينار
+      </td>
+
+      <td>
+        <button
+          class="primary small"
+          data-wallet-user="${user.id}">
+          المحفظة
+        </button>
+      </td>
+    `;
+
+    table.appendChild(tr);
+
+  });
 
 }
 
 
-if(unitId){
+document.addEventListener("click", event => {
 
-if(!confirm("حذف الوحدة؟"))return;
+  const id =
+    event.target.dataset.walletUser;
 
-await deleteDoc(
-doc(db,"units",unitId)
-);
+  if (!id) return;
 
-loadUnits();
+  document.getElementById("walletStudent").value = id;
 
-}
-
-
-if(lessonId){
-
-if(!confirm("حذف الدرس؟"))return;
-
-await deleteDoc(
-doc(db,"lessons",lessonId)
-);
-
-loadLessons();
-
-}
+  document.querySelector('[data-page="wallet"]')
+    .click();
 
 });
 
 
-/* ================= LOGOUT ================= */
+/* =========================
+   WALLET
+========================= */
 
-document.getElementById("logoutBtn")
-.addEventListener("click",async()=>{
+document.getElementById("walletSubmit")
+.addEventListener("click", async () => {
 
-await signOut(auth);
+  const studentId =
+    document.getElementById("walletStudent").value;
 
-location.href="index.html";
+  const amount =
+    Number(
+      document.getElementById("walletAmount").value
+    );
+
+  const type =
+    document.getElementById("walletType").value;
+
+  const description =
+    document.getElementById("walletDescription").value.trim();
+
+
+  if (!studentId){
+
+    alert("اختر الطالب.");
+
+    return;
+  }
+
+  if (!amount || amount <= 0){
+
+    alert("أدخل مبلغًا صحيحًا.");
+
+    return;
+  }
+
+
+  const studentRef =
+    doc(db,"users",studentId);
+
+  const studentSnap =
+    await getDoc(studentRef);
+
+  if (!studentSnap.exists()){
+
+    alert("الطالب غير موجود.");
+
+    return;
+  }
+
+
+  const data =
+    studentSnap.data();
+
+  const oldBalance =
+    Number(data.walletBalance || 0);
+
+
+  let newBalance;
+
+
+  if (type === "deposit"){
+
+    newBalance =
+      oldBalance + amount;
+
+  }else{
+
+    newBalance =
+      oldBalance - amount;
+
+    if (newBalance < 0){
+
+      alert("لا يمكن أن يصبح الرصيد سالبًا.");
+
+      return;
+    }
+
+  }
+
+
+  await updateDoc(
+    studentRef,
+    {
+      walletBalance:newBalance,
+      updatedAt:Date.now()
+    }
+  );
+
+
+  await addDoc(
+    collection(db,"walletTransactions"),
+    {
+
+      studentId,
+
+      amount:
+        type === "deposit"
+          ? amount
+          : -amount,
+
+      transactionType:type,
+
+      description,
+
+      createdBy:currentUser.uid,
+
+      createdAt:Date.now()
+
+    }
+  );
+
+
+  document.getElementById("walletAmount").value = "";
+  document.getElementById("walletDescription").value = "";
+
+
+  await loadUsers();
+
+  fillSelects();
+
+  alert("تم تنفيذ العملية بنجاح.");
 
 });
 
 
-/* ================= SECURITY ================= */
+/* =========================
+   SUBSCRIPTIONS
+========================= */
+
+async function loadSubscriptions(){
+
+  const snap =
+    await getDocs(
+      collection(db,"subscriptions")
+    );
+
+  subscriptions = [];
+
+  snap.forEach(item => {
+
+    subscriptions.push({
+      id:item.id,
+      ...item.data()
+    });
+
+  });
+
+  renderSubscriptions();
+
+}
+
+
+function renderSubscriptions(){
+
+  const table =
+    document.getElementById("subscriptionsTable");
+
+  table.innerHTML = "";
+
+  if (!subscriptions.length){
+
+    table.innerHTML =
+      `<tr><td colspan="4" class="empty">
+        لا توجد اشتراكات.
+      </td></tr>`;
+
+    return;
+  }
+
+
+  subscriptions.forEach(subscription => {
+
+    const student =
+      users.find(
+        x => x.id === subscription.studentId
+      );
+
+    const unit =
+      units.find(
+        x => x.id === subscription.unitId
+      );
+
+
+    const date =
+      subscription.subscribedAt
+        ? new Date(
+            subscription.subscribedAt
+          ).toLocaleString("ar")
+        : "-";
+
+
+    const tr =
+      document.createElement("tr");
+
+
+    tr.innerHTML = `
+
+      <td>
+        ${escapeHtml(
+          student?.email ||
+          subscription.studentId ||
+          "-"
+        )}
+      </td>
+
+      <td>
+        ${escapeHtml(
+          unit?.title ||
+          subscription.unitId ||
+          "-"
+        )}
+      </td>
+
+      <td>
+        ${Number(
+          subscription.pricePaid || 0
+        ).toFixed(2)}
+        دينار
+      </td>
+
+      <td>${date}</td>
+
+    `;
+
+
+    table.appendChild(tr);
+
+  });
+
+}
+
+
+/* =========================
+   SELECTS
+========================= */
+
+function fillSelects(){
+
+  const unitSubject =
+    document.getElementById("unitSubject");
+
+  unitSubject.innerHTML =
+    `<option value="">اختر المادة</option>`;
+
+
+  subjects.forEach(subject => {
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      subject.id;
+
+    option.textContent =
+      subject.name;
+
+    unitSubject.appendChild(option);
+
+  });
+
+
+  const lessonUnit =
+    document.getElementById("lessonUnit");
+
+  lessonUnit.innerHTML =
+    `<option value="">اختر الوحدة</option>`;
+
+
+  units.forEach(unit => {
+
+    const subject =
+      subjects.find(
+        x => x.id === unit.subjectId
+      );
+
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      unit.id;
+
+    option.textContent =
+      `${unit.title} — ${subject?.name || ""}`;
+
+    lessonUnit.appendChild(option);
+
+  });
+
+
+  const walletStudent =
+    document.getElementById("walletStudent");
+
+  walletStudent.innerHTML =
+    `<option value="">اختر الطالب</option>`;
+
+
+  users
+    .filter(x => x.role !== "admin")
+    .forEach(user => {
+
+      const option =
+        document.createElement("option");
+
+      option.value =
+        user.id;
+
+      option.textContent =
+        `${user.fullName || user.email} — ${Number(user.walletBalance || 0).toFixed(2)} دينار`;
+
+      walletStudent.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function updateDashboard(){
+
+  document.getElementById("countStudents")
+    .textContent =
+      users.filter(x => x.role !== "admin").length;
+
+  document.getElementById("countSubjects")
+    .textContent =
+      subjects.length;
+
+  document.getElementById("countUnits")
+    .textContent =
+      units.length;
+
+  document.getElementById("countLessons")
+    .textContent =
+      lessons.length;
+
+  document.getElementById("countSubscriptions")
+    .textContent =
+      subscriptions.length;
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function showMessage(
+  id,
+  text,
+  success
+){
+
+  const element =
+    document.getElementById(id);
+
+  element.textContent =
+    text;
+
+  element.className =
+    "message show " +
+    (success ? "success" : "error");
+
+}
+
 
 function escapeHtml(value){
 
-return String(value)
-.replaceAll("&","&amp;")
-.replaceAll("<","&lt;")
-.replaceAll(">","&gt;")
-.replaceAll('"',"&quot;")
-.replaceAll("'","&#039;");
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
 
 }
 
 </script>
 
 </body>
-  </html>
+    </html>
