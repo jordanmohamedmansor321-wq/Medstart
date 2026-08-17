@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MedStart</title>
+
+  <meta name="description"
+        content="MedStart - منصة تعليمية لطلاب سنة إعداد الطب">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Tahoma, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    .auth-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .secondary {
+      background: #eef2ff;
+      color: #2563eb;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    .hero {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 25px;
+      text-align: center;
+      box-shadow: 0 5px 25px rgba(0,0,0,.05);
+    }
+
+    .hero h1 {
+      margin-top: 0;
+      font-size: 38px;
+    }
+
+    .hero p {
+      color: #64748b;
+      line-height: 1.8;
+    }
+
+    .section {
+      margin-top: 35px;
+    }
+
+    .section h2 {
+      margin-bottom: 20px;
+    }
+
+    #subjects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .subject-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .subject-card h3 {
+      margin-top: 0;
+    }
+
+    .empty {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      color: #64748b;
+      text-align: center;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .modal-box h2 {
+      margin-top: 0;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 7px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .message {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #64748b;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .header-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+
+    <div class="logo">
+      MedStart
+    </div>
+
+    <div class="auth-buttons">
+      <button class="secondary" id="loginBtn">
+        تسجيل الدخول
+      </button>
+
+      <button class="primary" id="registerBtn">
+        إنشاء حساب
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>مرحبًا بك في MedStart 🩺</h1>
+
+    <p>
+      منصتك التعليمية لطلاب سنة إعداد الطب.
+      <br>
+      المواد والوحدات والدروس في مكان واحد.
+    </p>
+  </section>
+
+  <section class="section">
+
+    <h2>المواد الدراسية</h2>
+
+    <div id="subjects">
+      <div class="empty">
+        لا توجد مواد مضافة حاليًا.
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 MedStart
+</footer>
+
+<!-- =========================
+     AUTH MODAL
+========================= -->
+
+<div class="modal" id="authModal">
+
+  <div class="modal-box">
+
+    <h2 id="authTitle">
+      تسجيل الدخول
+    </h2>
+
+    <input
+      type="email"
+      id="email"
+      placeholder="البريد الإلكتروني"
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="كلمة المرور"
+    >
+
+    <div class="modal-actions">
+
+      <button
+        class="primary"
+        id="authSubmit"
+      >
+        تسجيل الدخول
+      </button>
+
+      <button
+        class="secondary"
+        id="closeModal"
+      >
+        إغلاق
+      </button>
+
+    </div>
+
+    <div
+      class="message"
+      id="authMessage"
+    ></div>
+
+  </div>
+
+</div>
+
+<!-- =========================
+     FIREBASE
+========================= -->
+
+<script type="module">
+
+  import { initializeApp }
+    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    getDocs
+  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyAgpyK22xVCCyfrcdkwYwv8Y7brmpEsBDs",
+
+    authDomain:
+      "medstart-ee44d.firebaseapp.com",
+
+    projectId:
+      "medstart-ee44d",
+
+    storageBucket:
+      "medstart-ee44d.firebasestorage.app",
+
+    messagingSenderId:
+      "378114086129",
+
+    appId:
+      "1:378114086129:web:2ca927eb5d4a52fe83c550",
+
+    measurementId:
+      "G-XWXB59DX4Y"
+  };
+
+
+  const app = initializeApp(firebaseConfig);
+
+  const auth = getAuth(app);
+
+  const db = getFirestore(app);
+
+
+  const loginBtn =
+    document.getElementById("loginBtn");
+
+  const registerBtn =
+    document.getElementById("registerBtn");
+
+  const authModal =
+    document.getElementById("authModal");
+
+  const closeModal =
+    document.getElementById("closeModal");
+
+  const authTitle =
+    document.getElementById("authTitle");
+
+  const authSubmit =
+    document.getElementById("authSubmit");
+
+  const email =
+    document.getElementById("email");
+
+  const password =
+    document.getElementById("password");
+
+  const authMessage =
+    document.getElementById("authMessage");
+
+  let mode = "login";
+
+
+  function showMessage(message) {
+
+    authMessage.textContent = message;
+
+    authMessage.style.display = "block";
+  }
+
+
+  function openAuth(type) {
+
+    mode = type;
+
+    authModal.classList.add("active");
+
+    authMessage.style.display = "none";
+
+    if (type === "login") {
+
+      authTitle.textContent =
+        "تسجيل الدخول";
+
+      authSubmit.textContent =
+        "تسجيل الدخول";
+
+    } else {
+
+      authTitle.textContent =
+        "إنشاء حساب";
+
+      authSubmit.textContent =
+        "إنشاء حساب";
+    }
+  }
+
+
+  loginBtn.addEventListener(
+    "click",
+    () => openAuth("login")
+  );
+
+
+  registerBtn.addEventListener(
+    "click",
+    () => openAuth("register")
+  );
+
+
+  closeModal.addEventListener(
+    "click",
+    () => {
+      authModal.classList.remove("active");
+    }
+  );
+
+
+  authSubmit.addEventListener(
+    "click",
+    async () => {
+
+      const userEmail =
+        email.value.trim();
+
+      const userPassword =
+        password.value;
+
+      if (!userEmail || !userPassword) {
+
+        showMessage(
+          "اكتب البريد الإلكتروني وكلمة المرور."
+        );
+
+        return;
+      }
+
+      try {
+
+        if (mode === "login") {
+
+          await signInWithEmailAndPassword(
+            auth,
+            userEmail,
+            userPassword
+          );
+
+          showMessage(
+            "تم تسجيل الدخول بنجاح."
+          );
+
+        } else {
+
+          await createUserWithEmailAndPassword(
+            auth,
+            userEmail,
+            userPassword
+          );
+
+          showMessage(
+            "تم إنشاء الحساب بنجاح."
+          );
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        showMessage(
+          "تعذر تنفيذ العملية. تأكد من البيانات وحاول مرة أخرى."
+        );
+      }
+
+    }
+  );
+
+
+  async function loadSubjects() {
+
+    const subjectsContainer =
+      document.getElementById("subjects");
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(db, "subjects")
+        );
+
+      if (snapshot.empty) {
+
+        subjectsContainer.innerHTML =
+          '<div class="empty">لا توجد مواد مضافة حاليًا.</div>';
+
+        return;
+      }
+
+      subjectsContainer.innerHTML = "";
+
+      snapshot.forEach(doc => {
+
+        const subject =
+          doc.data();
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "subject-card";
+
+        card.innerHTML = `
+          <h3>${subject.name || "مادة"}</h3>
+          <p>${subject.description || ""}</p>
+        `;
+
+        subjectsContainer.appendChild(card);
+
+      });
+
+    } catch (error) {
+
+      console.error(error);
+
+      subjectsContainer.innerHTML =
+        '<div class="empty">تعذر تحميل المواد حاليًا.</div>';
+    }
+  }
+
+
+  onAuthStateChanged(
+    auth,
+    user => {
+
+      if (user) {
+
+        console.log(
+          "Logged in:",
+          user.uid
+        );
+
+      }
+
+    }
+  );
+
+
+  loadSubjects();
+
+</script>
+
+</body>
+  </html>
